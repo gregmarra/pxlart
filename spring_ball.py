@@ -1,40 +1,38 @@
-import collections
 import numpy
 import pygame
 import sys
-import time
 import pymunk
 import pymunk.pygame_util
-import random
 
+# Pygame setup
 pygame.init()
 
 size = width, height = 640, 480
-
 screen = pygame.display.set_mode(size)
 
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 16)
 
-### Physics stuff
+# Physics setup
 space = pymunk.Space(iterations = 1)
 space.gravity = (0.0, 0.0)
 space.damping = 0.999 # to prevent it from blowing up.
+
 static_body = pymunk.Body()
 static_body.position = (width/2, height/2)
 
 mass = 10
 radius = 25
 moment = pymunk.moment_for_circle(mass, 0, radius, (0,0))
-body = pymunk.Body(mass, moment)
-body.position = (width/10,height/2)
-body.start_position = pymunk.Vec2d(body.position)
-shape = pymunk.Circle(body, radius)
-shape.elasticity = 0.9999999
-shape.color = pygame.color.THECOLORS["white"]
-space.add(body, shape)
-pj = pymunk.constraint.DampedSpring(static_body, body, (0,0), (0,0), 0, 50, 0)
-space.add(pj)
+ball_body = pymunk.Body(mass, moment)
+ball_body.position = (width/10,height/2)
+ball_body.start_position = pymunk.Vec2d(ball_body.position)
+ball_shape = pymunk.Circle(ball_body, radius)
+ball_shape.elasticity = 0.9999999
+ball_shape.color = pygame.color.THECOLORS["white"]
+space.add(ball_body, ball_shape)
+spring = pymunk.constraint.DampedSpring(static_body, ball_body, (0,0), (0,0), 0, 50, 0)
+space.add(spring)
 
 while True:
   for event in pygame.event.get():
