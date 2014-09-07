@@ -28,7 +28,6 @@ ball_body = pymunk.Body(mass, moment)
 ball_body.position = (width/10,height/2)
 ball_body.start_position = pymunk.Vec2d(ball_body.position)
 ball_shape = pymunk.Circle(ball_body, radius)
-ball_shape.elasticity = 0.9999999
 ball_shape.color = pygame.color.THECOLORS["white"]
 space.add(ball_body, ball_shape)
 spring = pymunk.constraint.DampedSpring(static_body, ball_body, (0,0), (0,0), 0, 50, 0)
