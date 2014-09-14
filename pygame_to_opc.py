@@ -1,7 +1,7 @@
 import numpy
 import pygame
 import sys
-from contained_simulation import Simulation
+from simulations.ball_spring_simulation import BallSpringSimulation
 
 import opc
 
@@ -14,7 +14,7 @@ screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 16)
 
-simulation = Simulation()
+simulation = BallSpringSimulation()
 
 #-------------------------------------------------------------------------------
 # connect to server
