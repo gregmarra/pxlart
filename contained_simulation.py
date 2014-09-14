@@ -6,7 +6,7 @@ import pymunk.pygame_util
 
 class Simulation(object):
   def __init__(self):
-    self.width = 640
+    self.width = 480
     self.height = 480
 
     # Physics setup

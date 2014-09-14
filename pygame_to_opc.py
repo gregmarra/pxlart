@@ -3,6 +3,8 @@ import pygame
 import sys
 from contained_simulation import Simulation
 
+import opc
+
 # Pygame setup
 pygame.init()
 
@@ -13,6 +15,20 @@ clock = pygame.time.Clock()
 font = pygame.font.Font(None, 16)
 
 simulation = Simulation()
+
+#-------------------------------------------------------------------------------
+# connect to server
+
+IP_PORT = '127.0.0.1:7890'
+client = opc.Client(IP_PORT)
+if client.can_connect():
+    print '    connected to %s' % IP_PORT
+else:
+    # can't connect, but keep running in case the server appears later
+    print '    WARNING: could not connect to %s' % IP_PORT
+print
+
+# pygame loop
 
 while True:
   for event in pygame.event.get():
@@ -30,7 +46,8 @@ while True:
 
   simulation.project_to_pygame_screen(screen)
   
-  led_colors = simulation.project_to_led_strip(10)
+  led_colors = simulation.project_to_led_strip(240)
+  client.put_pixels(led_colors, channel=0)
 
   offset = 40
   for led_color in led_colors:
