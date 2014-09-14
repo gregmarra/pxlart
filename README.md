@@ -3,6 +3,12 @@ pxlart
 
 Playing around with led pxl art
 
+usage
+---
+- Run OPC server from where you've installed OPC: `bin/gl_server layouts/xyz.json`
+- Run pxlart simulation with projections: `python pygame_to_opc.py`
+
+
 libraries
 ---
 I'm using a few other libraries to do things
