@@ -16,8 +16,7 @@ font = pygame.font.Font(None, 16)
 
 simulation = BallSpringSimulation()
 
-#-------------------------------------------------------------------------------
-# connect to server
+# connect to OPC server
 
 IP_PORT = '127.0.0.1:7890'
 client = opc.Client(IP_PORT)
