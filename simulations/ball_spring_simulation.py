@@ -6,9 +6,8 @@ import pymunk.pygame_util
 from helpers.projection_helper import ProjectionHelper
 
 class BallSpringSimulation(object):
-  def __init__(self):
-    self.width = 480
-    self.height = 480
+  def __init__(self, size):
+    self.width, self.height = size
 
     # Physics setup
     self.space = pymunk.Space(iterations = 1)

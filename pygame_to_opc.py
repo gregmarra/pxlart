@@ -14,7 +14,7 @@ screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 16)
 
-simulation = BallSpringSimulation()
+simulation = BallSpringSimulation(size)
 
 # connect to OPC server
 
