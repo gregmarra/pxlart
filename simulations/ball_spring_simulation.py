@@ -42,7 +42,7 @@ class BallSpringSimulation(object):
       p = pymunk.pygame_util.to_pygame(ball.body.position, screen)
       pygame.draw.circle(screen, ball.color, p, int(ball.radius), 0)
 
-  def project_to_led_strip(self, n_leds):
+  def project_to_intensity_list(self, n_leds):
     pxl_ranges = [((i * self.width/n_leds), ((i+1) * self.width/n_leds)) for i in range(n_leds)]
 
     for ball in self.space.shapes:
@@ -50,6 +50,10 @@ class BallSpringSimulation(object):
       ball_right = ball.body.position.x + (self.width/n_leds) / 2
       pct_overlaps = [ProjectionHelper.interval_overlap_pct((pxl_range), (ball_left,ball_right)) for pxl_range in pxl_ranges]
 
-      pxl_colors = [(255*pct_overlap,255*pct_overlap,255*pct_overlap) for pct_overlap in pct_overlaps]
+    return pct_overlaps
+
+  def project_to_led_strip(self, n_leds):
+    pxl_colors = [(255*intensity,255*intensity,255*intensity) for intensity in self.project_to_intensity_list(n_leds)]
 
     return pxl_colors
+
