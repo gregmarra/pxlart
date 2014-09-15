@@ -3,6 +3,7 @@ import pygame
 import sys
 
 from filters.fader import FaderFilter
+from helpers.color_helper import ColorHelper
 from simulations.ball_spring_simulation import BallSpringSimulation
 
 import opc
@@ -52,25 +53,6 @@ while True:
 
   fader_filter.stimulate(simulation.project_to_intensity_list(N_LEDS))
 
-  def proportional_mix_colors(a, b, a_share):
-    return (
-      proportional_mix(a[0], b[0], a_share),
-      proportional_mix(a[1], b[1], a_share),
-      proportional_mix(a[2], b[2], a_share),
-      )
-
-  def proportional_mix(a, b, a_share):
-    return a * a_share + b * (1 - a_share)
-
-  def color_from_excitement(excitement, color_pallette):
-    for x in range(0, len(color_pallette) - 1):
-      width = 1.0 / len(color_pallette)
-      upper_bound = (x+1) * width
-      if (excitement < upper_bound):
-        pct_of_range = (excitement - (x * width)) / width
-        return proportional_mix_colors(color_pallette[x], color_pallette[x+1], 1 - pct_of_range)
-    return proportional_mix_colors(color_pallette[-1], color_pallette[-1], 1)
-
   color_pallette = [
     pygame.color.THECOLORS["black"],
     pygame.color.THECOLORS["red"],
@@ -78,7 +60,7 @@ while True:
     pygame.color.THECOLORS["yellow"],
     pygame.color.THECOLORS["white"]
   ]
-  led_colors = [color_from_excitement(excitement, color_pallette) for excitement in fader_filter.excitements]
+  led_colors = [ColorHelper.color_from_intensity(excitement, color_pallette) for excitement in fader_filter.excitements]
 
   client.put_pixels(led_colors, channel=0)
 
