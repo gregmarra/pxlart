@@ -4,6 +4,7 @@ import sys
 
 from filters.fader import FaderFilter
 from helpers.color_helper import ColorHelper
+from helpers.sixty_to_sixty_four_helper import SixtyToSixtyFourHelper
 from simulations.comets import CometsSimulation
 
 import opc
@@ -39,7 +40,7 @@ while True:
   for event in pygame.event.get():
     if event.type == pygame.QUIT: sys.exit()
   
-  if numpy.random.random() < 0.05:
+  if numpy.random.random() < 0.01:
     simulation.addComet()
 
   ### Update physics
@@ -65,7 +66,7 @@ while True:
   ]
   led_colors = [ColorHelper.color_from_intensity(excitement, color_pallette) for excitement in fader_filter.excitements]
 
-  client.put_pixels(led_colors, channel=0)
+  client.put_pixels(SixtyToSixtyFourHelper.transform(led_colors), channel=0)
 
   screen.blit(font.render("fps: " + str(clock.get_fps()), 1, pygame.color.THECOLORS["white"]), (0,0))
   
