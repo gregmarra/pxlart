@@ -33,7 +33,7 @@ print
 
 # pygame loop
 
-fader_filter = FaderFilter(clock, N_LEDS)
+fader_filter = FaderFilter(N_LEDS)
 
 while True:
   for event in pygame.event.get():
