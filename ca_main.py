@@ -5,6 +5,7 @@ import time
 from filters.fader import FaderFilter
 from helpers.color_helper import ColorHelper
 from helpers.color_pallette import ColorPallette
+from helpers.dimmer_helper import DimmerHelper
 from helpers.sixty_to_sixty_four_helper import SixtyToSixtyFourHelper
 from simulations.ca import CASimulation
 
@@ -34,6 +35,7 @@ while True:
   fader_filter.stimulate(simulation.array)
   
   led_colors = [ColorHelper.color_from_intensity(excitement, color_pallette) for excitement in fader_filter.excitements]
+  led_colors = DimmerHelper.dim(led_colors, 0.7)
   client.put_pixels(SixtyToSixtyFourHelper.transform(led_colors), channel=0)
 
   time.sleep(.2)
