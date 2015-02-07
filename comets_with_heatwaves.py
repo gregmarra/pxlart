@@ -4,6 +4,7 @@ import sys
 
 from filters.fader import FaderFilter
 from helpers.color_helper import ColorHelper
+from helpers.color_pallette import ColorPallette
 from helpers.sixty_to_sixty_four_helper import SixtyToSixtyFourHelper
 from simulations.comets import CometsSimulation
 
@@ -34,7 +35,7 @@ print
 
 # pygame loop
 
-fader_filter = FaderFilter(N_LEDS)
+fader_filter = FaderFilter(N_LEDS, 0.3)
 
 while True:
   for event in pygame.event.get():
@@ -57,13 +58,7 @@ while True:
 
   fader_filter.stimulate(simulation.project_to_intensity_list(N_LEDS))
 
-  color_pallette = [
-    pygame.color.THECOLORS["black"],
-    pygame.color.THECOLORS["red"],
-    pygame.color.THECOLORS["orange"],
-    pygame.color.THECOLORS["yellow"],
-    pygame.color.THECOLORS["white"]
-  ]
+  color_pallette = ColorPallette.colors(ColorPallette.WATER)
   led_colors = [ColorHelper.color_from_intensity(excitement, color_pallette) for excitement in fader_filter.excitements]
 
   client.put_pixels(SixtyToSixtyFourHelper.transform(led_colors), channel=0)
