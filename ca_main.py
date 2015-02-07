@@ -31,12 +31,17 @@ else:
 fader_filter = FaderFilter(N_LEDS, 0.6)
 color_pallette = ColorPallette.colors(ColorPallette.WATER)
 
+phase = 0
 while True:
   fader_filter.stimulate(simulation.array)
   
   led_colors = [ColorHelper.color_from_intensity(excitement, color_pallette) for excitement in fader_filter.excitements]
+  phase = phase+0.3 % 4
+  
+  #led_colors = [ColorHelper.rainbow(excitement, index, N_LEDS, phase) for index, excitement in enumerate(fader_filter.excitements)]
   led_colors = DimmerHelper.dim(led_colors, 0.7)
   client.put_pixels(SixtyToSixtyFourHelper.transform(led_colors), channel=0)
 
   time.sleep(.2)
   simulation.step()
+  
