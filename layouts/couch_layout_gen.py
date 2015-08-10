@@ -1,3 +1,5 @@
+### NOTE NEED TO MANUALLY DELETE COMMA AFTER LAST POINT
+
 LEDS_PER_METER = 30.0
 # Dimensions from http://www.ikea.com/us/en/catalog/products/S99932597/
 COUCH_WIDTH = 2.18
@@ -47,7 +49,7 @@ def layout_leds(width, depth, leds_per_meter):
 def print_coordinates(led_coordinates):
   print "["
   for x, y in led_coordinates:
-    print "{\"point\": [%s, %s, 0]}," % (x, y)
+    print "{\"point\": [%5.3f, %5.3f, %5.3f]}," % (x, y, 0)
   print "]"
 
 def main():
