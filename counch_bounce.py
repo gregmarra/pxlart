@@ -35,10 +35,8 @@ print
 # pygame loop
 
 fader_filter = FaderFilter(N_LEDS)
-max_couch_force = 0
-max_couch_jerk = 0
-couch_force = 0
-couch_jerk = 0
+min_couch_position = 0
+max_couch_position = 0
 
 while True:
   for event in pygame.event.get():
@@ -56,31 +54,11 @@ while True:
 
   simulation.project_to_pygame_screen(screen)
 
-  old_couch_force = couch_force
-  couch_force = simulation.get_couch_force()
-  max_couch_force = max(abs(max_couch_force), abs(couch_force))
-  
-  old_couch_jerk = couch_jerk
-  couch_jerk = couch_force - old_couch_force
-  max_couch_jerk = max(abs(max_couch_jerk), abs(couch_jerk))
-  
-  couch_yank = couch_jerk - old_couch_jerk
-  
-  if (couch_jerk < 0):
-    if couch_yank > 0:
-      mode = "lo falling"
-    else:
-      mode = "hi falling"
-  else:
-    if couch_yank > 0:
-      mode = "lo rising"
-    else:
-      mode = "hi rising"
+  couch = simulation.get_couch()
+  min_couch_position = min(min_couch_position, couch.position[1])
+  max_couch_position = max(max_couch_position, couch.position[1])
 
-  if mode == "lo rising" or mode == "lo falling":
-    dim = max(0, (abs(1 / couch_jerk) - 0.2)) + 0.2
-  else:
-    dim = 0.2
+  dim = 1 - (couch.position[1] - min_couch_position) / (max_couch_position - min_couch_position)
 
   led_colors = [ColorHelper.rainbow(float(a)/256, index, 128) for index, a in enumerate(range(N_LEDS))]
   led_colors = DimmerHelper.dim(led_colors, dim)

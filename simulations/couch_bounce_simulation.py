@@ -42,6 +42,13 @@ class CouchBounceSimulation(object):
       p = pymunk.pygame_util.to_pygame(couch.body.position, screen)
       pygame.draw.circle(screen, couch.color, p, int(couch.radius), 0)
 
-  def get_couch_force(self):
+  def get_bungie_force(self):
+    return self.get_bungie().impulse
+
+  def get_bungie(self):
     for constraint in self.space.constraints:
-      return constraint.impulse
+      return constraint
+
+  def get_couch(self):
+    for body in self.space.bodies:
+      return body
