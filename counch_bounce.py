@@ -49,11 +49,11 @@ while True:
   for x in range(iterations): # 10 iterations to get a more stable simulation
     simulation.space.step(dt)
 
-  ### Clear screen
+  ### Draw screen
   screen.fill(pygame.color.THECOLORS["black"])
-
   simulation.project_to_pygame_screen(screen)
 
+  ### Actually do some LED animations
   couch = simulation.get_couch()
   min_couch_position = min(min_couch_position, couch.position[1])
   max_couch_position = max(max_couch_position, couch.position[1])
@@ -65,7 +65,7 @@ while True:
 
   client.put_pixels(led_colors, channel=0)
 
+  ### Service the loop
   screen.blit(font.render("fps: " + str(clock.get_fps()), 1, pygame.color.THECOLORS["white"]), (0,0))
-  
   pygame.display.flip()
   clock.tick(fps)
