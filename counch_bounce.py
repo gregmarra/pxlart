@@ -26,10 +26,10 @@ simulation = CouchBounceSimulation(size)
 IP_PORT = '127.0.0.1:7890'
 client = opc.Client(IP_PORT)
 if client.can_connect():
-    print '    connected to %s' % IP_PORT
+  print '    connected to %s' % IP_PORT
 else:
-    # can't connect, but keep running in case the server appears later
-    print '    WARNING: could not connect to %s' % IP_PORT
+  # can't connect, but keep running in case the server appears later
+  print '    WARNING: could not connect to %s' % IP_PORT
 print
 
 # pygame loop
@@ -47,7 +47,7 @@ while True:
   iterations = 25
   dt = 1.0/float(fps)/float(iterations)
   for x in range(iterations): # 10 iterations to get a more stable simulation
-      simulation.space.step(dt)
+    simulation.space.step(dt)
 
   ### Clear screen
   screen.fill(pygame.color.THECOLORS["black"])
